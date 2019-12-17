@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 import { makeStyles } from '@material-ui/core/styles';
+import { login } from 'api';
 import {
   Container,
   Avatar,
@@ -37,6 +40,19 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const on = useDispatch();
+
+  const handleSubmit = () => {
+    login(email, password)
+      .then((res) => {
+        localStorage.setItem('access-token', res.data.apiKey);
+        on(push('/'));
+      });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -45,7 +61,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -58,6 +74,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -69,28 +86,29 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Lembrar-me"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => handleSubmit()}
           >
             Entrar
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#">
+              <Link href="#" variant="body2">
                 Esqueceu a senha?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#">
+              <Link href="#" variant="body2">
                 Cadastre-se
               </Link>
             </Grid>
