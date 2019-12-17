@@ -1,5 +1,6 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
-const App = () => <div>Cashback</div>;
+const App = () => <Button variant="contained" color="primary">Cashback</Button>;
 
 export default App;
