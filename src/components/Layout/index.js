@@ -13,12 +13,11 @@ import {
   Typography,
   Divider,
   IconButton,
-  Badge,
   Container,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import PropTypes from 'prop-types';
 import makeStyles from './style';
 
@@ -31,6 +30,11 @@ const Layout = ({ children }) => {
   const handleDrawerClose = () => setOpen(false);
 
   const on = useDispatch();
+
+  const handleLogout = () => {
+    localStorage.setItem('access-token', '');
+    on(push('/login'));
+  };
 
   return (
     <div className={classes.root}>
@@ -49,10 +53,8 @@ const Layout = ({ children }) => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Cashback
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+          <IconButton color="inherit" onClick={() => handleLogout()}>
+            <ExitToApp />
           </IconButton>
         </Toolbar>
       </AppBar>
