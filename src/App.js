@@ -3,6 +3,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import configureStore, { browserHistory } from 'store';
+import Login from 'components/Login';
 
 const store = configureStore();
 
@@ -12,7 +13,7 @@ const App = () => (
       <BrowserRouter>
         <Switch>
           <Route exact path="/" render={() => <div>Home</div>} />
-          <Route exact path="/login" render={() => <div>Login</div>} />
+          <Route exact path="/login" component={Login} />
           <Route render={() => (<div>404</div>)} />
         </Switch>
       </BrowserRouter>
